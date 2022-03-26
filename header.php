@@ -24,8 +24,8 @@ session_start();
 /////////////////////////////Variables to store data/////////////////////////////
 $MESSAGE_LOGIN = '';
 $PRODUCT_ID    = '';
-/////////////////////////////Login/////////////////////////////
-if (isset($_POST['login'])) {
+/////////////////////////////Login user/////////////////////////////
+///
 		if (!isset($_POST['username']) || !isset($_POST['password'])) {
 				$MESSAGE_LOGIN = "Username or Password Empty";
 		} //!isset($_POST['username']) || !isset($_POST['password'])
@@ -126,7 +126,7 @@ if (isset($_POST["register"])) {
 				 } //$USER['EmailAddress'] = $E_MAIL
 		} //$USER 
 	 	// if fields are filled M
- 		else if (!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)) {
+ 		else if (!empty($USERNAME) || !empty($FIRST_NAME) || !empty($LAST_NAME) || !empty($E_MAIL) || !empty($PHONE_NUMBER) || !empty($PASSWORD) || !empty($RE_TYPE_PASSWORD)) {
  				$MESSAGE_REGISTER = "please  Fill Mandatory Fields!";
  		} //!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)
  		// if password matches

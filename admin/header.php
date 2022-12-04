@@ -1,19 +1,18 @@
-
 <div id="header">
-	<div>
-	<h1><img src="../Resources/designimages/logo.png" width="350" height="90"></h1>
-	</div>
-	</div>
-	<div class="navigationbar">
-	<ul>
-    <li><a href="manageorders.php">Manage Orders</a></li>
-    <li><a href="manageusers.php">Manage Users</a></li>
-    <li><a href="manageproducts.php">Manage Products</a></li>
-    <li><a href="managecategory.php">Manage Category</a></li>
-	</ul>
+    <div>
+        <h1><img src="../Resources/designimages/logo.png" width="350" height="90"></h1>
     </div>
-    
-    <?php
+</div>
+<div class="navigationbar">
+    <ul>
+        <li><a href="manageorders.php">Manage Orders</a></li>
+        <li><a href="manageusers.php">Manage Users</a></li>
+        <li><a href="manageproducts.php">Manage Products</a></li>
+        <li><a href="managecategory.php">Manage Category</a></li>
+    </ul>
+</div>
+
+<?php
 	session_start();
 require('db.php');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +28,7 @@ if (isset($_POST['updateorder'])) {
 } 
 ?>
 
-    <?php
+<?php
 require('db.php');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////Login page related .php////////////////////////////////////////////

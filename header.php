@@ -1,21 +1,21 @@
 <div id="header">
-	<div>
-	<h1><img src="Resources/designimages/logo.png" width="350" height="90"></h1>
-	</div>
-	</div>
-	<div class="navigationbar">
-	<ul>
-	<li><a href="Home.php">Home</a></li>
-	<li><a href="pnb.php">Products</a></li>
-	<li><a href="promotions.php">Promotions</a></li>
-	<li><a href="aboutus.php">About Us</a></li>
-	<li><a href="contactus.php">Contact Us</a></li>
-	<li><a href="cart.php">Cart</a></li>
-	<li><a href="myprofile.php">My Profile</a></li>
-	</ul>
+    <div>
+        <h1><img src="Resources/designimages/logo.png" width="350" height="90"></h1>
     </div>
-    
-    <?php
+</div>
+<div class="navigationbar">
+    <ul>
+        <li><a href="Home.php">Home</a></li>
+        <li><a href="pnb.php">Products</a></li>
+        <li><a href="promotions.php">Promotions</a></li>
+        <li><a href="aboutus.php">About Us</a></li>
+        <li><a href="contactus.php">Contact Us</a></li>
+        <li><a href="cart.php">Cart</a></li>
+        <li><a href="myprofile.php">My Profile</a></li>
+    </ul>
+</div>
+
+<?php
 require ('db.php');
 session_start();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,14 +231,14 @@ if (isset($_POST['productbiketypechange'])) {
 		$_SESSION['bikeselected'] = '';
 		$BIKE_TYPE                = $_SESSION['bikeselected'];
 } //isset($_POST['productbiketypechange'])
-/////////////////////////////Identify type of sorting selected/////////////////////////////
+/////////////////////////////Identify type of sorting selected/
 if (isset($_POST['sort'])) {
 		$SORT           = $_POST['sort'];
 		$EXPLODED_VALUE = explode(",", $SORT);
 		$SORT_TYPE      = $EXPLODED_VALUE[0];
 		$SORT_COLUMN    = $EXPLODED_VALUE[1];
 } //isset($_POST['sort'])
-/////////////////////////////Filter products based on category/////////////////////////////
+/////////////////////////////Filter products based on category/
 if (isset($_POST['categoryvalues'])) {
 		$CATEGORY_VALUES   = $_POST['categoryvalues'];
 		$CATEGORY_SELECTED = implode(",", $CATEGORY_VALUES);
@@ -254,7 +254,7 @@ if (isset($_POST['categoryvalues'])) {
 				$CATEGORY                  = $CATEGORY_SELECTED;
 		}
 } //isset($_POST['categoryvalues'])
-/////////////////////////////Select All products/////////////////////////////
+//Select All products//
 else {
 		if ($BIKE_TYPE == '') {
 				$select_all_product1 = "SELECT * FROM `tblproducts`";
@@ -267,7 +267,7 @@ else {
 				$MESSAGE             = "All Available Products of the Selected Bike!";
 		}
 }
-/////////////////////////////Search Products////////////////////////////
+//////Search Products//
 if (isset($_POST['search'])) {
 	$BIKE_TYPE                = $_SESSION['bikeselected'];
 		$SEARCHED_VALUE = $_POST['searchproduct'];

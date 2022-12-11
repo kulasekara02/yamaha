@@ -12,7 +12,7 @@
 	<div id="wrapper"> 
     
 	<!-----------------Header & Navigation Bar----------------->
-    
+    //include te main code file
 <?php
 	include('header.php');
 ?>

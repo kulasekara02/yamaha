@@ -7,6 +7,7 @@ $result = $con->query($sql);
 $_SESSION =''
 ?>
 <!doctype html>
+
 <html>
 <body>
 <h1 align="center">Employee Details</h1>

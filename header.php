@@ -14,7 +14,7 @@
 	<li><a href="myprofile.php">My Profile</a></li>
 	</ul>
     </div>
-    
+    c
     <?php
 require ('db.php');
 session_start();
@@ -24,8 +24,8 @@ session_start();
 /////////////////////////////Variables to store data/////////////////////////////
 $MESSAGE_LOGIN = '';
 $PRODUCT_ID    = '';
-/////////////////////////////Login/////////////////////////////
-if (isset($_POST['login'])) {
+/////////////////////////////Login user/////////////////////////////
+///
 		if (!isset($_POST['username']) || !isset($_POST['password'])) {
 				$MESSAGE_LOGIN = "Username or Password Empty";
 		} //!isset($_POST['username']) || !isset($_POST['password'])
@@ -92,92 +92,98 @@ if (isset($_POST['continueguest'])) {
 require('db.php');
 /////////////////////////////Variables to store data/////////////////////////////
 $MESSAGE_REGISTER = '';
-/////////////////////////////Regster/////////////////////////////
-if (isset($_POST["register"])) {
-		$USERNAME           = $_POST['username'];
-		$USERNAME           = mysqli_real_escape_string($con, $USERNAME);
-		$FIRST_NAME         = stripslashes($_POST['firstname']);
-		$FIRST_NAME         = mysqli_real_escape_string($con, $FIRST_NAME);
-		$LAST_NAME          = stripslashes($_POST['lastname']);
-		$LAST_NAME          = mysqli_real_escape_string($con, $LAST_NAME);
-		$E_MAIL             = stripslashes($_POST['email']);
-		$E_MAIL             = mysqli_real_escape_string($con, $E_MAIL);
-		$PHONE_NUMBER       = stripslashes($_POST['phonenumber']);
-		$PHONE_NUMBER       = mysqli_real_escape_string($con, $PHONE_NUMBER);
-		$PASSWORD           = stripslashes($_POST['password']);
-		$PASSWORD           = mysqli_real_escape_string($con, $PASSWORD);
-		$RE_TYPE_PASSWORD   = stripslashes($_POST['retypepassword']);
-		$RE_TYPE_PASSWORD   = mysqli_real_escape_string($con, $RE_TYPE_PASSWORD);
-		$SECURITY_QUESTION  = stripslashes($_POST['securityquestion']);
-		$SECURITY_QUESTION  = mysqli_real_escape_string($con, $SECURITY_QUESTION);
-		$SECURITY_ANSWER    = stripslashes($_POST['securityanswer']);
-		$SECURITY_ANSWER    = mysqli_real_escape_string($con, $SECURITY_ANSWER);
-		$select_user        = "SELECT * FROM tblusers WHERE Username='$USERNAME' OR EmailAddress='$E_MAIL' LIMIT 1";
-		$result_select_user = mysqli_query($con, $select_user);
-		$USER               = mysqli_fetch_assoc($result_select_user);
-		// if user exists
-		if ($USER) {
-				if ($USER['Username'] = $USERNAME) {
-						$MESSAGE_REGISTER = "OOPS! Username Is Already Taken!";
-				} //$USER['Username'] = $USERNAME
-				if ($USER['EmailAddress'] = $E_MAIL) {
-						$MESSAGE_REGISTER = "OOPS! Email Is Already Taken";
-				} //$USER['EmailAddress'] = $E_MAIL
-		} //$USER
-		// if fields are filled
-		else if (!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)) {
-				$MESSAGE_REGISTER = "OOPS! Fill Mandatory Fields!";
-		} //!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)
-		// if password matches
-		else if ($PASSWORD != $RE_TYPE_PASSWORD) {
-				$MESSAGE_REGISTER = "Password doesnt match!";
-		} //$PASSWORD != $RE_TYPE_PASSWORD
-		else if (strlen($PASSWORD) < '8') {
-        $MESSAGE_REGISTER= "Password Must Contain At Least 8 Characters!";
-    	}
-		else if (!filter_var($E_MAIL, FILTER_VALIDATE_EMAIL)) {
-  $MESSAGE_REGISTER = "Invalid Email";
-		}
-		
-		// enter user to database
-		else {
-				$insert_user        = "INSERT INTO `tblusers`(`Username`, `FirstName`, `LastName`, `EmailAddress`, `PhoneNumber`, `Password`, `SecurityQuestion`, `SecurityAnswer`) VALUES ('$USERNAME','$FIRST_NAME','$LAST_NAME','$E_MAIL','$PHONE_NUMBER','" . md5($PASSWORD) . "','$SECURITY_QUESTION','$SECURITY_ANSWER')";
-				$result_insert_user = mysqli_query($con, $insert_user);
-				if ($result_insert_user) {
-						$MESSAGE_REGISTER = "successful";
-				} //$result_insert_user
-				else {
-						$MESSAGE_REGISTER = "Registration unsuccessful!";
-				}
-		}
-		mysqli_close($con); // Closing connection
-} //isset($_POST["register"])
-?>
+/////////////////////////////Regster///////////////////////////// 
+if (isset($_POST["register"])) { 
+		$USERNAME           = $_POST['username']; 
+		$USERNAME           = mysqli_real_escape_string($con, $USERNAME);  
+		$FIRST_NAME         = stripslashes($_POST['firstname']); 
+		$FIRST_NAME         = mysqli_real_escape_string($con, $FIRST_NAME); 
+		$LAST_NAME          = stripslashes($_POST['lastname']); 
+		$LAST_NAME          = mysqli_real_escape_string($con, $LAST_NAME);  
+		$E_MAIL             = stripslashes($_POST['email']); 
+		$E_MAIL             = mysqli_real_escape_string($con, $E_MAIL); 
+		$PHONE_NUMBER       = stripslashes($_POST['phonenumber']); 
+		$PHONE_NUMBER       = mysqli_real_escape_string($con, $PHONE_NUMBER); 
+		$PASSWORD           = stripslashes($_POST['password']); 
+		$PASSWORD           = mysqli_real_escape_string($con, $PASSWORD);     
+		$RE_TYPE_PASSWORD   = stripslashes($_POST['retypepassword']); 
+		$RE_TYPE_PASSWORD   = mysqli_real_escape_string($con, $RE_TYPE_PASSWORD); 
+		$SECURITY_QUESTION  = stripslashes($_POST['securityquestion']);  
+		$SECURITY_QUESTION  = mysqli_real_escape_string($con, $SECURITY_QUESTION);  
+		$SECURITY_ANSWER    = stripslashes($_POST['securityanswer']); 
+		$SECURITY_ANSWER    = mysqli_real_escape_string($con, $SECURITY_ANSWER); 
+		$select_user        = "SELECT * FROM tblusers WHERE Username='$USERNAME' OR EmailAddress='$E_MAIL' LIMIT 1"; 
+		$result_select_user = mysqli_query($con, $select_user); 
+		$USER               = mysqli_fetch_assoc($result_select_user); 
+		// if user exists 
+		// check the stetment before  run the fkg code  
+		if ($USER) {  
+				if ($USER['Username'] = $USERNAME) {  
+						$MESSAGE_REGISTER = " Username Is Already Taken!"; 
+				} //$USER['Username'] = $USERNAME 
+				if ($USER['EmailAddress'] = $E_MAIL) { 
+						$MESSAGE_REGISTER = " Email Is Already Taken"; 
+				 } //$USER['EmailAddress'] = $E_MAIL
+		} //$USER 
+	 	// if fields are filled M
+ 		else if (!empty($USERNAME) || !empty($FIRST_NAME) || !empty($LAST_NAME) || !empty($E_MAIL) || !empty($PHONE_NUMBER) || !empty($PASSWORD) || !empty($RE_TYPE_PASSWORD)) {
+ 				$MESSAGE_REGISTER = "please  Fill Mandatory Fields!";
+ 		} //!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)
+ 		// if password matches
+ 		else if ($PASSWORD != $RE_TYPE_PASSWORD) {
+ 				$MESSAGE_REGISTER = "Password doesnt match!";
+ 		} //$PASSWORD != $RE_TYPE_PASSWORD
+ 		else if (strlen($PASSWORD) < '8') {
+         $MESSAGE_REGISTER= "Password Must Contain At Least 8 Characters!";
+      	}
+ 		else if (!filter_var($E_MAIL, FILTER_VALIDATE_EMAIL)) {
+   $MESSAGE_REGISTER = "please use a valid  Email";
+ 		}
+ 		
+ 		// enter user to database
+ 		else {
+ 				$insert_user= "INSERT INTO `tblusers`(`Username`, `FirstName`, `LastName`,
+				  `EmailAddress`, `PhoneNumber`, `Password`, `SecurityQuestion`, `SecurityAnswer`) VALUES ('$USERNAME','$FIRST_NAME','$LAST_NAME','$E_MAIL','$PHONE_NUMBER','" . md5($PASSWORD) . "','$SECURITY_QUESTION','$SECURITY_ANSWER')";
+ 				$result_insert_user = mysqli_query($con, $insert_user);
+ 				if ($result_insert_user) {
+  						$MESSAGE_REGISTER = "successful";
+ 				} //$result_insert_user 
+ 				else {
+ 						$MESSAGE_REGISTER = "Registration unsuccessful!";
+ 				}
+ 		}
+ 		mysqli_close($con); // Closing connection
+} //isset($_POST["register"]) 
+// close the register  sta
+?> 
 
-<?php
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////View Products page related .php////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-require('db.php');
-///////////////////////Add products to cart///////////////////////
-$MESSAGE_REVIEW = '';
-if (isset($_POST['addtocart'])) {
-		if (!isset($_SESSION['username'])) {
-				$_SESSION['selectedproduct']  = $_POST['productid'];
-				$_SESSION['selectedquantity'] = $_POST['quantity'];
-				$_SESSION['crumbs']           = "1";
-				header("location: login.php");
-		} //!isset($_SESSION['username'])
-		else {
-				$PRODUCT_ID              = $_POST['productid'];
-				$PRODUCT_QUANTITY        = $_POST['quantity'];
-				$USERNAME                = $_SESSION['username'];
-				$v_insert_to_cart        = "INSERT into`tblcart` (ProductID, Username, Quantity) VALUES ('" . $PRODUCT_ID . "','" . $USERNAME . "','" . $PRODUCT_QUANTITY . "')";
-				$result_v_insert_to_cart = mysqli_query($con, $v_insert_to_cart);
-				header('location: cart.php');
-		}
-} //isset($_POST['addtocart'])
-///////////////////////Add a review///////////////////////
+  
+<?php  
+
+///////View Products page and selct the products  .php//
+
+require('db.php'); 
+////////Add products to cart//////
+$MESSAGE_REVIEW = ''; 
+if (isset($_POST['addtocart'])) { 
+		if (!isset($_SESSION['username'])) { 
+				$_SESSION['selectedproduct']  = $_POST['productid'];  
+				$_SESSION['selectedquantity'] = $_POST['quantity']; 
+				$_SESSION['crumbs']           = "1"; 
+				header("location: login.php"); 
+		} //!isset($_SESSION['username']) 
+		else { 
+				$PRODUCT_ID              = $_POST['productid']; 
+				$PRODUCT_QUANTITY        = $_POST['quantity']; 
+				$USERNAME                = $_SESSION['username']; 
+		 		$v_insert_to_cart        = "INSERT into`tblcart` (ProductID, Username, Quantity) VALUES ('" . $PRODUCT_ID . "','" . $USERNAME . "','" . $PRODUCT_QUANTITY . "')";
+				$result_v_insert_to_cart = mysqli_query($con, $v_insert_to_cart); 
+ 				header('location: cart.php');
+	 	} 
+} //isset($_POST['addtocart']) j
+
+
+
 if (isset($_POST['addreview'])) {
 		if (!isset($_POST['productid']) || !isset($_POST['review'])) {
 				$MESSAGE_REVIEW = "Unable to Place Review!";

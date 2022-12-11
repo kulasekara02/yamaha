@@ -13,7 +13,7 @@
     
 	<div id="wrapper"> 
     
-	<!-----------------Header & Navigation Bar----------------->
+	<!-----------------Header & Navigation Bar----------------->b
     
 	<?php include('header.php');
 	///////////////////////Display reviews///////////////////////

@@ -24,7 +24,7 @@
 
 4. Software Requirements
    4.1 Web browser (Chrome, Firefox, etc.)
-      - Users need a modern web browser to access the Online Shopping System.
+      - Users need a modern web browser to access the yamaha Shopping System.
    
    4.2 Programming Software Requirements
       - MySQL (database)
@@ -32,7 +32,7 @@
       - Brackets
 
 5. System Architecture
-   The Online Shopping System follows a three-tier architecture:
+   The yamaha Shopping System follows a three-tier architecture:
    - Presentation Layer: HTML, CSS, and JavaScript are used for creating the frontend interface and user interactions.
    - Application Layer: PHP is used for implementing the business logic and processing user requests.
    - Data Layer: MySQL is used for data storage and retrieval, handling product information, user details, and orders.

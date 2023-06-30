@@ -125,7 +125,7 @@ if (isset($_POST["register"])) {
 				} //$USER['EmailAddress'] = $E_MAIL
 		} //$USER
 		// if fields are filled
-		else if (!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)) {
+		else if (!empty($USERNAME) || !empty($FIRST_NAME) || !empty($LAST_NAME) || !empty($E_MAIL) || !empty($PHONE_NUMBER) || !empty($PASSWORD) || !empty($RE_TYPE_PASSWORD)) {
 				$MESSAGE_REGISTER = "OOPS! Fill Mandatory Fields!";
 		} //!isset($USERNAME) || !isset($FIRST_NAME) || !isset($LAST_NAME) || !isset($E_MAIL) || !isset($PHONE_NUMBER) || !isset($PASSWORD) || !isset($RE_TYPE_PASSWORD)
 		// if password matches
@@ -179,25 +179,28 @@ if (isset($_POST['addtocart'])) {
 } //isset($_POST['addtocart'])
 ///////////////////////Add a review///////////////////////
 if (isset($_POST['addreview'])) {
-		if (!isset($_POST['productid']) || !isset($_POST['review'])) {
-				$MESSAGE_REVIEW = "Unable to Place Review!";
-		} //!isset($_POST['productid']) || !isset($_POST['rating']) || !isset($_POST['review'])
-		else {
-				$PRODUCT_ID           = $_POST['productid'];
-				$USERNAME             = $_SESSION['username'];
-				$PRODUCT_REVIEW       = $_POST['review'];
-				$insert_review        = "INSERT INTO `tblproductreviews`(`ProductID`, `Username`, `Review`) VALUES ('" . $PRODUCT_ID . "','" . $USERNAME . "','" . $PRODUCT_REVIEW . "')";
-				$result_insert_review = mysqli_query($con, $insert_review);
-				if ($result_insert_review) {
-						$MESSAGE_REVIEW = "Thank you for your review!";
-						header('location: #.php');
-				} //$result_insert_review
-				else {
-						$MESSAGE_REVIEW = "Unable to Place Review!";
-						header('location: #.php');
-				}
+	if (!isset($_POST['productid']) || !isset($_POST['review'])) {
+		$MESSAGE_REVIEW = "Unable to Place Review!";
+	} else {
+		$PRODUCT_ID = $_POST['productid'];
+		$USERNAME = $_SESSION['username'];
+		$PRODUCT_REVIEW = $_POST['review'];
+
+		$insert_review = "INSERT INTO `tblproductreviews`(`ProductID`, `Username`, `Review`) VALUES (?, ?, ?)";
+		$stmt = mysqli_prepare($con, $insert_review);
+		mysqli_stmt_bind_param($stmt, 'iss', $PRODUCT_ID, $USERNAME, $PRODUCT_REVIEW);
+
+		if (mysqli_stmt_execute($stmt)) {
+			$MESSAGE_REVIEW = "Thank you for your review!";
+			header('location: #.php');
+		} else {
+			$MESSAGE_REVIEW = "Unable to Place Review!";
+			header('location: #.php');
 		}
-} //isset($_POST['addreview'])
+
+		mysqli_stmt_close($stmt);
+	}
+}
 ?>
 
 
@@ -269,23 +272,25 @@ else {
 }
 /////////////////////////////Search Products////////////////////////////
 if (isset($_POST['search'])) {
-	$BIKE_TYPE                = $_SESSION['bikeselected'];
-		$SEARCHED_VALUE = $_POST['searchproduct'];
-		if ($BIKE_TYPE == '') {
-				$search_products   = "SELECT * FROM `tblproducts` WHERE CONCAT(`ProductName`) LIKE '%" . $SEARCHED_VALUE . "%'";
-				$result_products   = mysqli_query($con, $search_products);
-				$ROWS              = mysqli_num_rows($result_products);
-				$MESSAGE           = "We have found ('" . $ROWS . "') that matches:'" . $SEARCHED_VALUE . "' for the Selected Bike ";
-				$CATEGORY_SELECTED = '5';
-		} //$BIKE_TYPE == ''
-		else {
-				$search_products2  = "SELECT * FROM `tblproducts` WHERE ProductBikeType = '" . $BIKE_TYPE . "' AND CONCAT(`ProductName`) LIKE '%" . $SEARCHED_VALUE . "%'";
-				$result_products   = mysqli_query($con, $search_products2);
-				$ROWS              = mysqli_num_rows($result_products);
-				$MESSAGE           = "We have found ('" . $ROWS . "') that matches:'" . $SEARCHED_VALUE . "' ";
-				$CATEGORY_SELECTED = '5';
-		}
-} //isset($_POST['search'])
+	$BIKE_TYPE = $_SESSION['bikeselected'];
+	$SEARCHED_VALUE = $_POST['searchproduct'];
+
+	$search_query = "SELECT * FROM `tblproducts` WHERE CONCAT(`ProductName`) LIKE '%" . $SEARCHED_VALUE . "%'";
+	if ($BIKE_TYPE !== '') {
+		$search_query .= " AND ProductBikeType = '" . $BIKE_TYPE . "'";
+	}
+
+	$result_products = mysqli_query($con, $search_query);
+	$ROWS = mysqli_num_rows($result_products);
+
+	if ($ROWS > 0) {
+		$MESSAGE = "We have found ('" . $ROWS . "') that matches:'" . $SEARCHED_VALUE . "' ";
+		$CATEGORY_SELECTED = '5';
+	} else {
+		$MESSAGE = "No matching products found.";
+		$CATEGORY_SELECTED = ''; // Reset the category selection if no results found
+	}
+}
 ?>
 
 <?php
